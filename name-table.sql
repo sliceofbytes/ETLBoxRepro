@@ -1,0 +1,16 @@
+﻿USE [NameDb]
+GO
+
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Name](
+	[ID] [varchar](10) NOT NULL,
+	[FIRST_NAME] [varchar](24) NOT NULL,
+	[LAST_NAME] [varchar](24) NOT NULL
+) ON [PRIMARY]
+GO
+
