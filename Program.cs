@@ -9,8 +9,8 @@ namespace ETLBoxIssue
 	class Program
 	{
 
-		private static SqlConnectionManager _sourceConnection;
-		private static SqlConnectionManager _destinationConnection;
+		private static SQLiteConnectionManager _sourceConnection;
+		private static SQLiteConnectionManager _destinationConnection;
 
 		static void Main(string[] args)
 		{
@@ -23,9 +23,12 @@ namespace ETLBoxIssue
 			IConfigurationRoot configuration = builder.Build();
 
 
+			var sqlLiteConnection = $"Data Source={Path.Combine(Directory.GetCurrentDirectory(), "testdb.db")}";
+
+	
 			/* In my real data, Source and Destination are 2 Seperate Databases within the same SQL 2012 Instance */
-			_sourceConnection = new SqlConnectionManager(configuration.GetConnectionString("Source"));
-			_destinationConnection = new SqlConnectionManager(configuration.GetConnectionString("Destination"));
+			_sourceConnection = new SQLiteConnectionManager(sqlLiteConnection);
+			_destinationConnection = new SQLiteConnectionManager(sqlLiteConnection);
 
 			Console.WriteLine($"Source: {_sourceConnection.ConnectionString}");
 			Console.WriteLine($"Destination: {_destinationConnection.ConnectionString}");
@@ -36,6 +39,7 @@ namespace ETLBoxIssue
 
 			var transform = new RowTransformation<Name, People>(d =>
 			{
+				Console.WriteLine(d.FIRST_NAME);
 				return new People()
 				{
 					FirstName = d.FIRST_NAME,
